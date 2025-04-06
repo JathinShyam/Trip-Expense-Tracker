@@ -15,8 +15,24 @@ class CustomUser(AbstractUser):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    # profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     employee_id = models.CharField(max_length=50, unique=True)
+
+    # Add related_name to avoid clashes with auth.User
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='custom_user_set',
+        blank=True,
+        verbose_name='groups',
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='custom_user_set',
+        blank=True,
+        verbose_name='user permissions',
+        help_text='Specific permissions for this user.',
+    )
 
     class Meta:
         indexes = [

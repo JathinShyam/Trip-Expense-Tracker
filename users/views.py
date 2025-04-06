@@ -7,7 +7,7 @@ from .serializers import CustomUserSerializer, CustomUserListSerializer
 class UserListCreateView(generics.ListCreateAPIView):
     """View for listing all users and creating new users"""
     queryset = CustomUser.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -18,7 +18,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     """View for retrieving, updating and deleting individual users"""
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)

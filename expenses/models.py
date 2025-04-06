@@ -7,7 +7,7 @@ class Expense(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='expenses')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=15)
-    expense_details = models.JSONField(default=dict)
+    expense_details = models.JSONField(default=dict, null=True, blank=True)
     date = models.DateField()
     comments = models.TextField(blank=True)
     receipt = models.FileField(upload_to='receipts/%Y/%m/%d/', null=True, blank=True)

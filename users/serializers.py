@@ -8,7 +8,16 @@ DEPARTMENT_CHOICES = [
     ('IT', 'Information Technology'),
     ('FIN', 'Finance'), 
     ('MKT', 'Marketing'),
-    ('OPS', 'Operations')
+    ('OPS', 'Operations'),
+    ('ENG', 'Engineering'),
+    ('LEG', 'Legal'),
+    ('RND', 'Research and Development'),
+    ('PRD', 'Product Management'),
+    ('MNG', 'Management'),
+    ('SALES', 'Sales'),
+    ('SERVICE', 'Service'),
+    ('OTH', 'Other'),
+    ('MGR', 'Manager')
 ]
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -27,7 +36,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('id', 'username', 'password', 'confirm_password', 'email',
                  'first_name', 'last_name', 'department', 'mobile', 'manager',
-                 'is_active', 'date_joined', 'last_modified', 'profile_image',
+                 'is_active', 'date_joined', 'last_modified', # 'profile_image',
                  'employee_id')
         read_only_fields = ('id', 'date_joined', 'last_modified')
         extra_kwargs = {

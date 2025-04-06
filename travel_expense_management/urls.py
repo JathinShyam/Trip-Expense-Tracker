@@ -16,11 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import UserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', UserView.as_view(), name='user_view'),  # URL for user management
+    path('users/', include('users.urls')),  # Include users URLs
     path('reports/', include('reports.urls')),  # Include reports URLs
     path('expenses/', include('expenses.urls')),  # Include expenses URLs
     path('trips/', include('trips.urls')),  # Include trips URLs

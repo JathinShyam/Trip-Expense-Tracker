@@ -21,7 +21,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         expense = super().create(validated_data)
         trip = expense.trip
-        trip.total_expenses = trip.expenses.aggregate(
+        trip.total_expense = trip.expenses.aggregate(
             total=models.Sum('amount'))['total'] or Decimal('0.00')
         trip.save()
         return expense
@@ -31,7 +31,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
         expense = super().update(instance, validated_data)
         if old_amount != expense.amount:
             trip = expense.trip
-            trip.total_expenses = trip.expenses.aggregate(
+            trip.total_expense = trip.expenses.aggregate(
                 total=models.Sum('amount'))['total'] or Decimal('0.00')
             trip.save()
         return expense

@@ -7,24 +7,26 @@ from .serializers import TripSerializer
 class TripListCreateView(generics.ListCreateAPIView):
     """View for listing all trips and creating new trips"""
     serializer_class = TripSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         """Filter trips by authenticated user"""
-        return Trip.objects.filter(user=self.request.user)
-
+        # return Trip.objects.filter(user=self.request.user)
+        return Trip.objects.all()
     def perform_create(self, serializer):
         """Set the user to the authenticated user when creating"""
-        serializer.save(user=self.request.user)
+        # serializer.save(user=self.request.user)
+        serializer.save()
 
 class TripDetailView(generics.RetrieveUpdateDestroyAPIView):
     """View for retrieving, updating and deleting individual trips"""
     serializer_class = TripSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         """Filter trips by authenticated user"""
-        return Trip.objects.filter(user=self.request.user)
+        # return Trip.objects.filter(user=self.request.user)
+        return Trip.objects.all()
 
     def update(self, request, *args, **kwargs):
         """Handle partial and full updates"""
