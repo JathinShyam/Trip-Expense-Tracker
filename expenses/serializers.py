@@ -3,6 +3,12 @@ from .models import Expense
 from trips.models import Trip
 from decimal import Decimal
 from django.db import models
+
+# TODO: Implement JWT Authentication
+# TODO: Implement report generation cron job
+# TODO: Implement logger
+
+
 CATEGORY_CHOICES = [
     ('transport', 'Transport'),
     ('food', 'Food'), 
