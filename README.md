@@ -44,8 +44,8 @@ Built with:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/expense-tracker-api.git
-   cd expense-tracker-api
+   git clone https://github.com/JathinShyam/Trip-Expense-Tracker
+   cd Trip-Expense-Tracker
    ```
 
 2. Create and activate a virtual environment:
