@@ -1,22 +1,36 @@
 from django.db import models
-from trips.models import Trip
+from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
+from users.models import CustomUser
 
 class Expense(models.Model):
-    """Represents an individual expense entry for a trip"""
-
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='expenses')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.CharField(max_length=15)
-    expense_details = models.JSONField(default=dict, null=True, blank=True)
-    date = models.DateField()
-    comments = models.TextField(blank=True)
-    receipt = models.FileField(upload_to='receipts/%Y/%m/%d/', null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
+    """
+    Model for tracking expenses submitted by users.
+    """
+    
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='expenses')
+    category = models.TextField()
+    description = models.TextField()
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    # receipt = models.FileField(upload_to='receipts/', blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    
     class Meta:
         indexes = [
-            models.Index(fields=['trip', 'category'], name='expense_trip_category_idx'),
-            models.Index(fields=['date'], name='expense_date_idx')
+            models.Index(fields=['category'], name='category_idx'),
         ]
-
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.username}'s expense: {self.amount} ({self.status})"
+    
+    def save(self, *args, **kwargs):
+        """
+        Override save method to ensure updated_at is set correctly.
+        """
+        if not self.id:
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
+        return super(Expense, self).save(*args, **kwargs)
